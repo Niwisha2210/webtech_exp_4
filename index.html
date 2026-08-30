@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking Recipe Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8f0;
+            color: #C9996B;
+        }
+        nav {
+            background-color: #5E3122;
+            padding: 18px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #C9996B;
+        }
+
+        .hero {
+            height: 320px;
+            padding: 90px 20px;
+            text-align: center;
+
+            background-image:
+                url("img_flwr.gif"),
+                url("paper.gif");
+
+            background-position:
+                right bottom,
+                left top;
+
+            background-repeat:
+                no-repeat,
+                repeat;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            color: #5E3122;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #555;
+        }
+
+        .section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 45px auto;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #5E3122;
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .recipes-wrapper {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px 0 20px;
+        }
+
+        .recipes {
+            display: flex;
+            width: max-content;
+            gap: 25px;
+            animation: slideRecipes 22s linear infinite;
+        }
+
+        .recipes:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes slideRecipes {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .recipe-card {
+            width: 300px;
+            background-color: white;
+            padding: 15px;
+
+            border: 2px solid #C9996B;
+
+            border-radius: 20px 50px 20px 50px;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+
+            transition: transform 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .recipe-card h3 {
+            color: #5E3122;
+            margin: 15px 0 8px;
+        }
+
+        .recipe-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #d2691e;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #5E3122;
+        }
+
+        .special {
+            width: 80%;
+            max-width: 700px;
+            margin: 45px auto;
+            padding: 25px;
+
+            border: 20px solid transparent;
+            border-image: url("border.png") 30 round;
+
+            background-color: #fffdf7;
+        }
+
+        .special h2 {
+            color: #5E3122;
+            margin-bottom: 10px;
+        }
+
+        .food-banner {
+            width: 90%;
+            max-width: 900px;
+            height: 220px;
+            margin: 40px auto;
+
+            background-image: url("img_flower.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            border-radius: 25px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            text-align: center;
+        }
+
+        .food-banner div {
+            background-color: rgba(0, 0, 0, 0.55);
+            padding: 20px 40px;
+            border-radius: 15px;
+        }
+
+        .food-banner h2 {
+            font-size: 30px;
+        }
+
+        .subscribe {
+            background-color: #ffe4c4;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        input {
+            padding: 12px;
+            width: 250px;
+            margin: 8px;
+            border: 2px solid #aaa;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input:focus {
+            border: 3px solid #C9996B;
+            background-color: #fff8f0;
+        }
+
+        input:required {
+            border-color: #5E3122;
+        }
+
+        input[type="email"]:valid {
+            color: #5E3122;
+        }
+
+        input[type="email"]:invalid {
+            color: #8B4513;
+        }
+
+        .gallery-item {
+            margin: 20px;
+        }
+
+        .recipe-name {
+            display: inline-block;
+            width: 150px;
+            padding: 12px;
+
+            background-color: #ffe4c4;
+            color: #5E3122;
+
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .item-img {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            vertical-align: middle;
+
+            opacity: 0.2;
+            margin-left: 10px;
+
+            border-radius: 10px;
+
+            transition: opacity 0.3s ease;
+        }
+
+        .recipe-name:hover + .item-img {
+            opacity: 1;
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        th {
+            background-color: #5E3122;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 14px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #fff1df;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff8f0;
+        }
+
+        tr:hover {
+            background-color: #C9996B;
+        }
+
+
+        .recipe-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .recipe-modal-content {
+            background: #fffdf7;
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid #C9996B;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+            position: relative;
+            text-align: left;
+        }
+
+        .recipe-modal-content h2 {
+            color: #5E3122;
+            margin-bottom: 15px;
+        }
+
+        .recipe-modal-content img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 18px;
+        }
+
+        .recipe-modal-content ol {
+            color: #666;
+            line-height: 1.8;
+            padding-left: 25px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 30px;
+            color: #5E3122;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 25px;
+            background-color: #5E3122;
+            color: white;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#subscribe">Subscribe</a>
+    </nav>
+
+    <section class="hero">
+        <h1>Cooking Recipe Site</h1>
+
+        <p>
+            Simple ingredients. Amazing flavours. Happy cooking!
+        </p>
+
+        <a href="#recipes" class="btn">
+            Explore Recipes
+        </a>
+
+    </section>
+
+    <section class="section" id="recipes">
+
+        <h2> Popular Recipes</h2>
+
+        <div class="recipes-wrapper">
+        <div class="recipes">
+
+            <div class="recipe-card">
+                <img src="pizza.png" alt="Pizza">
+                <h3>Cheesy Pizza</h3><div class="recipe-steps" hidden>1. Prepare the dough.<br>2. Add sauce and cheese.<br>3. Top with fresh ingredients.<br>4. Bake until golden and bubbling.<br>5. Slice and serve hot.</div>
+                <p>
+                    Crispy crust topped with delicious cheese
+                    and fresh ingredients.
+                </p>
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+            </div>
+
+
+            <div class="recipe-card">
+
+                <img src="chocolate cake.png" alt="Dessert">
+
+                <h3>Sweet Dessert</h3><div class="recipe-steps" hidden>1. Prepare the dessert base.<br>2. Mix the ingredients until smooth.<br>3. Bake or chill as required.<br>4. Garnish beautifully.<br>5. Serve chilled or warm.</div>
+
+                <p>
+                    A delicious homemade dessert perfect
+                    for satisfying your sweet tooth.
+                </p>
+
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+
+            </div>
+
+            <div class="recipe-card">
+
+                <img src="pasta.png" alt="Pasta">
+
+                <h3>Creamy Pasta</h3><div class="recipe-steps" hidden>1. Boil the pasta until al dente.<br>2. Sauté garlic in butter.<br>3. Add cream and seasoning.<br>4. Toss in the pasta and Parmesan.<br>5. Finish with herbs and serve.</div>
+
+                <p>
+                    Rich and creamy pasta that is quick
+                    and easy to prepare.
+                </p>
+
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+
+            </div>
+ 
+            <div class="recipe-card">
+                <img src="steak.png" alt="Steak">
+                <h3>Steak</h3><div class="recipe-steps" hidden>1. Prepare the ingredients.<br>2. Sear the main ingredient until beautifully browned.<br>3. Add the sauce and aromatic herbs.<br>4. Finish with a refined garnish.<br>5. Plate and serve immediately.</div>
+                <p>A creative chef's special with rich flavours and a stylish presentation.</p>
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+            </div>
+           <div class="recipe-card">
+                <img src="pizza.png" alt="Pizza">
+                <h3>Cheesy Pizza</h3><div class="recipe-steps" hidden>1. Prepare the dough.<br>2. Add sauce and cheese.<br>3. Top with fresh ingredients.<br>4. Bake until golden and bubbling.<br>5. Slice and serve hot.</div>
+                <p>
+                    Crispy crust topped with delicious cheese
+                    and fresh ingredients.
+                </p>
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+            </div>
+
+
+            <div class="recipe-card">
+
+                <img src="chocolate cake.png" alt="Dessert">
+
+                <h3>Sweet Dessert</h3><div class="recipe-steps" hidden>1. Prepare the dessert base.<br>2. Mix the ingredients until smooth.<br>3. Bake or chill as required.<br>4. Garnish beautifully.<br>5. Serve chilled or warm.</div>
+
+                <p>
+                    A delicious homemade dessert perfect
+                    for satisfying your sweet tooth.
+                </p>
+
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+
+            </div>
+
+            <div class="recipe-card">
+
+                <img src="pasta.png" alt="Pasta">
+
+                <h3>Creamy Pasta</h3><div class="recipe-steps" hidden>1. Boil the pasta until al dente.<br>2. Sauté garlic in butter.<br>3. Add cream and seasoning.<br>4. Toss in the pasta and Parmesan.<br>5. Finish with herbs and serve.</div>
+
+                <p>
+                    Rich and creamy pasta that is quick
+                    and easy to prepare.
+                </p>
+
+                <button class="btn" onclick="openRecipe(this)">View Recipe</button>
+
+            </div>
+        </div>
+        </div>
+
+    </section>
+    <div class="special" id="chef-special">
+
+        <h2>Chef's Special</h2>
+
+        <img
+            src="luxury.png"
+            alt="Luxury Beef Wellington"
+            style="width:100%; height:320px; object-fit:cover; border-radius:15px; margin:15px 0;"
+        >
+
+        <h3 style="color:#5E3122; font-size:26px; margin:10px 0;">
+            Luxury Beef Wellington
+        </h3>
+
+        <p style="margin-bottom:18px;">
+            A restaurant-style Beef Wellington with tender beef fillet,
+            mushroom duxelles and golden, buttery puff pastry.
+        </p>
+
+        <h3 style="color:#5E3122; margin:15px 0 10px;">Ingredients</h3>
+
+        <ul style="text-align:left; line-height:1.8; color:#666; margin:0 auto 18px; max-width:600px;">
+            <li>500 g beef tenderloin</li>
+            <li>250 g mushrooms, finely chopped</li>
+            <li>1 sheet puff pastry</li>
+            <li>2 tbsp Dijon mustard</li>
+            <li>1 egg, beaten</li>
+            <li>1 tbsp butter and 1 tbsp olive oil</li>
+            <li>Salt, black pepper and fresh thyme</li>
+        </ul>
+
+        <h3 style="color:#5E3122; margin:15px 0 10px;">How to Make It</h3>
+
+        <ol style="text-align:left; line-height:1.8; color:#666; margin:0 auto 20px; max-width:600px;">
+            <li>Season the beef generously with salt and pepper.</li>
+            <li>Sear it in hot oil until browned on all sides. Brush with Dijon mustard and let it cool.</li>
+            <li>Cook the chopped mushrooms with butter and thyme until their moisture evaporates completely.</li>
+            <li>Spread the mushroom mixture over the pastry, place the beef in the centre and wrap tightly.</li>
+            <li>Brush the pastry with beaten egg and score the top lightly for a beautiful finish.</li>
+            <li>Bake at 200°C for about 25–30 minutes, until the pastry is deeply golden.</li>
+            <li>Rest for 10 minutes, slice carefully and serve with your favourite sauce.</li>
+        </ol>
+
+        <a href="#recipes" class="btn">Explore More Recipes</a>
+
+    </div>
+<section class="section">
+
+        <h2> Recipe Information</h2>
+
+        <table>
+
+            <tr>
+                <th>Recipe</th>
+                <th>Category</th>
+                <th>Time</th>
+            </tr>
+
+            <tr>
+                <td>Pizza</td>
+                <td>Italian</td>
+                <td>30 mins</td>
+            </tr>
+
+            <tr>
+                <td>Steak</td>
+                <td>American</td>
+                <td>10 mins</td>
+            </tr>
+
+            <tr>
+                <td>Chocolate Cake</td>
+                <td>Dessert</td>
+                <td>45 mins</td>
+            </tr>
+
+            <tr>
+                <td>Pasta</td>
+                <td>Italian</td>
+                <td>25 mins</td>
+            </tr>
+
+        </table>
+
+    </section>
+
+
+    <section class="section" id="subscribe">
+
+        <div class="subscribe">
+
+            <h2>Get New Recipes</h2>
+
+            <p>Subscribe to receive delicious recipes!</p>
+
+            <form>
+
+                <input
+                    type="text"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <input
+                    type="email"
+                    placeholder="name@example.com"
+                    required
+                >
+
+                <br>
+
+                <button class="btn" type="submit">
+                    Subscribe
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <p>Happy Cooking!</p>
+
+    </footer>
+
+
+    <div class="recipe-modal" id="recipeModal" onclick="closeRecipe(event)">
+        <div class="recipe-modal-content">
+            <span class="close-modal" onclick="closeRecipe()">&times;</span>
+            <img id="modalImage" src="" alt="Recipe">
+            <h2 id="modalTitle"></h2>
+            <h3 style="color:#5E3122; margin-bottom:10px;">Steps to Make It</h3>
+            <ol id="modalSteps"></ol>
+        </div>
+    </div>
+
+    <script>
+        function openRecipe(button) {
+            const card = button.closest('.recipe-card');
+            const title = card.querySelector('h3').innerText;
+            const image = card.querySelector('img').src;
+            const stepsText = card.querySelector('.recipe-steps').innerHTML;
+            const steps = stepsText.split('<br>');
+
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalImage').src = image;
+
+            const list = document.getElementById('modalSteps');
+            list.innerHTML = '';
+
+            steps.forEach(step => {
+                const cleanStep = step.replace(/^\d+\.\s*/, '');
+                const li = document.createElement('li');
+                li.innerHTML = cleanStep;
+                list.appendChild(li);
+            });
+
+            document.getElementById('recipeModal').style.display = 'flex';
+        }
+
+        function closeRecipe(event) {
+            if (!event || event.target.id === 'recipeModal' || event.target.classList.contains('close-modal')) {
+                document.getElementById('recipeModal').style.display = 'none';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.getElementById('recipeModal').style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
